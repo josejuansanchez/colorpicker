@@ -163,6 +163,7 @@ public class ColorPickerView extends FrameLayout {
                         return onTouchReceived(event);
                     default:
                         mImgThumb.setPressed(false);
+                        onStopTrackingTouch();
                         return false;
                 }
             }
@@ -184,6 +185,10 @@ public class ColorPickerView extends FrameLayout {
         mImgThumb.setX(snapPoint.x - (mImgThumb.getMeasuredWidth() / 2));
         mImgThumb.setY(snapPoint.y - (mImgThumb.getMeasuredHeight() / 2));
         return true;
+    }
+
+    void onStopTrackingTouch() {
+        fireColorListenerStopTrackingTouch(mLastSelectedColor);
     }
 
     /**
@@ -347,11 +352,18 @@ public class ColorPickerView extends FrameLayout {
         }
     }
 
+    private void fireColorListenerStopTrackingTouch(int color) {
+        if (mColorListener != null) {
+            mColorListener.onStopTrackingTouch(color);
+        }
+    }
+
     public void setColorListener(@Nullable ColorListener colorListener) {
         mColorListener = colorListener;
     }
 
     public interface ColorListener {
         void onColorSelected(int color);
+        void onStopTrackingTouch(int color);
     }
 }

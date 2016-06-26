@@ -3,6 +3,7 @@ package com.christophesmet.colorpicker.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.christophesmet.android.views.colorpicker.ColorPickerView;
@@ -10,6 +11,7 @@ import com.christophesmet.colorpicker.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private ColorPickerView mColorPickerView;
     private View mColorView;
 
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onColorSelected(int color) {
                 mColorView.setBackgroundColor(color);
+            }
+
+            @Override
+            public void onStopTrackingTouch(int color) {
+                Log.d(TAG, "Color: " + color);
             }
         });
     }
